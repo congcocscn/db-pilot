@@ -1,0 +1,59 @@
+# ===============================================
+# DB-Pilot Configuration
+# ===============================================
+
+spring:
+  application:
+    name: db-pilot
+
+  # Virtual Threads (Java 21+)
+  threads:
+    virtual:
+      enabled: true
+
+  # Embedded H2 for Knowledge Store
+  datasource:
+    url: jdbc:h2:file:${user.home}/.db-pilot/knowledge;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+  # Disable unnecessary auto-configs
+  main:
+    banner-mode: log
+
+# ===============================================
+# DB-Pilot Settings
+# ===============================================
+dbpilot:
+  # LLM Configuration
+  llm:
+    provider: anthropic
+    api-key: ${ANTHROPIC_API_KEY:}
+    model: claude-sonnet-4-20250514
+
+  # Token Guard
+  token-limit: 4000
+
+  # Table Ranking Weights
+  ranking:
+    semantic-weight: 0.5
+    relation-weight: 0.3
+    frequency-weight: 0.2
+
+# ===============================================
+# Logging — structured with MDC
+# ===============================================
+logging:
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%X{traceId:-none}][%X{userId:-system}][%X{dbId:-}][%X{action:-}] %-5level %logger{36} — %msg%n"
+  level:
+    com.dbpilot: INFO
+    dev.langchain4j: WARN
+    com.zaxxer.hikari: WARN
+    org.hibernate: WARN

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.5</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.dbpilot</groupId>
+    <artifactId>db-pilot</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>DB-Pilot</name>
+    <description>Enterprise-Grade Multi-Database AI Agent — translates natural language into precise DB queries via MCP</description>
+
+    <modules>
+        <module>db-pilot-core</module>
+        <module>db-pilot-infrastructure</module>
+        <module>db-pilot-mcp</module>
+        <module>db-pilot-app</module>
+    </modules>
+
+    <properties>
+        <!-- Java -->
+        <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- LangChain4j -->
+        <langchain4j.version>1.0.0-beta3</langchain4j.version>
+
+        <!-- MCP SDK -->
+        <mcp-sdk.version>0.10.0</mcp-sdk.version>
+
+        <!-- Picocli -->
+        <picocli.version>4.7.6</picocli.version>
+
+        <!-- Database Drivers -->
+        <oracle.driver.version>23.7.0.25.01</oracle.driver.version>
+        <mysql.driver.version>9.2.0</mysql.driver.version>
+        <mariadb.driver.version>3.5.3</mariadb.driver.version>
+        <mongodb.driver.version>5.4.0</mongodb.driver.version>
+
+        <!-- Knowledge Store -->
+        <h2.version>2.3.232</h2.version>
+
+        <!-- Credential Storage -->
+        <java-keyring.version>1.0.4</java-keyring.version>
+
+        <!-- ONNX Runtime for local embeddings -->
+        <onnxruntime.version>1.20.0</onnxruntime.version>
+
+        <!-- Lombok -->
+        <lombok.version>1.18.36</lombok.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- ==================== Internal Modules ==================== -->
+            <dependency>
+                <groupId>com.dbpilot</groupId>
+                <artifactId>db-pilot-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dbpilot</groupId>
+                <artifactId>db-pilot-infrastructure</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dbpilot</groupId>
+                <artifactId>db-pilot-mcp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- ==================== LangChain4j BOM ==================== -->
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j-bom</artifactId>
+                <version>${langchain4j.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- ==================== MCP SDK ==================== -->
+            <dependency>
+                <groupId>io.modelcontextprotocol.sdk</groupId>
+                <artifactId>mcp</artifactId>
+                <version>${mcp-sdk.version}</version>
+            </dependency>
+
+            <!-- ==================== Picocli ==================== -->
+            <dependency>
+                <groupId>info.picocli</groupId>
+                <artifactId>picocli</artifactId>
+                <version>${picocli.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>info.picocli</groupId>
+                <artifactId>picocli-spring-boot-starter</artifactId>
+                <version>${picocli.version}</version>
+            </dependency>
+
+            <!-- ==================== Database Drivers ==================== -->
+            <dependency>
+                <groupId>com.oracle.database.jdbc</groupId>
+                <artifactId>ojdbc11</artifactId>
+                <version>${oracle.driver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>${mysql.driver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mariadb.jdbc</groupId>
+                <artifactId>mariadb-java-client</artifactId>
+                <version>${mariadb.driver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongodb-driver-sync</artifactId>
+                <version>${mongodb.driver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongodb-driver-core</artifactId>
+                <version>${mongodb.driver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>bson</artifactId>
+                <version>${mongodb.driver.version}</version>
+            </dependency>
+
+            <!-- ==================== Knowledge Store ==================== -->
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+            </dependency>
+
+            <!-- ==================== Credential Storage ==================== -->
+            <dependency>
+                <groupId>com.github.javakeyring</groupId>
+                <artifactId>java-keyring</artifactId>
+                <version>${java-keyring.version}</version>
+            </dependency>
+
+            <!-- ==================== ONNX Runtime ==================== -->
+            <dependency>
+                <groupId>com.microsoft.onnxruntime</groupId>
+                <artifactId>onnxruntime</artifactId>
+                <version>${onnxruntime.version}</version>
+            </dependency>
+
+            <!-- ==================== Lombok ==================== -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                            <path>
+                                <groupId>info.picocli</groupId>
+                                <artifactId>picocli-codegen</artifactId>
+                                <version>${picocli.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

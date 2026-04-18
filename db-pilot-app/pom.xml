@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.dbpilot</groupId>
+        <artifactId>db-pilot</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>db-pilot-app</artifactId>
+    <name>DB-Pilot App</name>
+    <description>Application assembly — Spring Boot entry point, CLI commands, and GraalVM native image packaging.</description>
+
+    <dependencies>
+        <!-- ==================== Internal ==================== -->
+        <dependency>
+            <groupId>com.dbpilot</groupId>
+            <artifactId>db-pilot-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dbpilot</groupId>
+            <artifactId>db-pilot-infrastructure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dbpilot</groupId>
+            <artifactId>db-pilot-mcp</artifactId>
+        </dependency>
+
+        <!-- ==================== Spring Boot ==================== -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- ==================== Picocli ==================== -->
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- ==================== Lombok ==================== -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ==================== Test ==================== -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.dbpilot.app.DbPilotApplication</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- GraalVM Native Image Profile -->
+        <profile>
+            <id>native</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <configuration>
+                            <mainClass>com.dbpilot.app.DbPilotApplication</mainClass>
+                            <imageName>db-pilot</imageName>
+                            <buildArgs>
+                                <buildArg>--no-fallback</buildArg>
+                                <buildArg>-H:+ReportExceptionStackTraces</buildArg>
+                            </buildArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
