@@ -1,0 +1,27 @@
+# Build artifacts
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA (Dành cho JetBrains DataGrip/IntelliJ)
+.idea/
+*.iml
+out/
+gen/
+
+# Eclipse
+.settings/
+.project
+.classpath
+
+# VS Code
+.vscode/
+
+# Log files
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
